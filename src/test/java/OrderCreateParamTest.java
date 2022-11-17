@@ -1,5 +1,5 @@
-package org.example;
-
+import api.order.Order;
+import api.order.OrderClient;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -27,7 +27,7 @@ public class OrderCreateParamTest {
     private final List<String> colorValue;
 
     public OrderCreateParamTest(String firstNameValue, String lastNameValue, String addressValue, int metroStationValue,
-                           String phoneValue, int rentTimeValue, String deliveryDateValue, String commentValue, List<String> colorValue) {
+                                String phoneValue, int rentTimeValue, String deliveryDateValue, String commentValue, List<String> colorValue) {
         this.firstNameValue = firstNameValue;
         this.lastNameValue = lastNameValue;
         this.addressValue = addressValue;
@@ -39,7 +39,7 @@ public class OrderCreateParamTest {
         this.colorValue = colorValue;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1} {2} {3} {5} {6} {7} {8}")
     public static Object[][] getTestDataCreateOrder() {
         return new Object[][]{
                 {"Naruto", "Uchiha", "Konoha, 142 apt.", 4, "+7 800 355 35 35", 5, "2020-06-06", "Saske, come back to Konoha", null},
@@ -52,7 +52,7 @@ public class OrderCreateParamTest {
     @Test
     @DisplayName("Параметризованный тест создания заказа")
     @Description("Проверка создания заказа без указания цвета, с черным, серым и обоими цветами")
-    public void testTrackFieldInOrder(){
+    public void testTrackFieldInOrder() {
         OrderClient ordersClient = new OrderClient();
         ValidatableResponse responseCreate = ordersClient.create(new Order(firstNameValue, lastNameValue, addressValue,
                 metroStationValue, phoneValue, rentTimeValue, deliveryDateValue, commentValue, colorValue));
